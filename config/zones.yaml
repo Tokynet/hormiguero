@@ -1,0 +1,36 @@
+- name: home
+  latitude: !secret h_latitude
+  longitude: !secret h_longitude
+  radius: 100
+  icon: mdi:home
+
+- name: metrostar
+  latitude: !secret mss_latitude
+  longitude: !secret mss_longitude
+  radius: 300
+  icon: mdi:office
+
+- name: postoffice
+  latitude: !secret usps_latitude
+  longitude: !secret usps_longitude
+  radius: 100
+  icon: mdi:email-multiple
+
+- name: Liams
+  latitude: !secret liams_latitude
+  longitude: !secret liams_longitude
+  radius: 30
+  icon: mdi:circle
+
+- name: Giant
+  latitude: !secret giant_latitude
+  longitude: !secret giant_longitude
+  radius: 55
+  icon: mdi:car
+
+- name: Leesburg Town
+  latitude: !secret ltown_latitude
+  longitude: !secret ltown_longitude
+  radius: 240
+  icon: mdi:town
+

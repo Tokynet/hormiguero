@@ -1,0 +1,42 @@
+- alias: Turn driveway on
+  trigger:
+    platform: time
+    at: '04:25:00'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.jasco_products_14291_in_wall_smart_switch_switch_2
+#      entity_id: switch.jasco_products_14291_in_wall_smart_switch_switch
+    - delay: '00:25:00'
+    - service: switch.turn_off
+      entity_id: switch.jasco_products_14291_in_wall_smart_switch_switch_2
+#      entity_id: switch.jasco_products_14291_in_wall_smart_switch_switch
+
+- alias: Safe at work
+  trigger:
+    platform: state
+    entity_id: device_tracker.mom_leladroid
+    to: 'postoffice'
+  action:
+    service: notify.pushbullet
+    data:
+      message: 'Mama llego al trabajo segura :-)'
+
+- alias: Garage door open for too long
+  trigger:
+    platform: time
+    at: '23:00:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: 'cover.garagedoor'
+        state: 'open'
+  action:
+    - service: notify.pushbullet
+      data:
+        message: 'Garagedoor is open!'
+    - service: notify.masterroom
+      data:
+        message: 'Garagedoor is open!'
+
+

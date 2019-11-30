@@ -1,0 +1,120 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+#Cameras
+camera: !include config/cameras.yaml
+
+#cast:
+#  media_player:
+#    - host: 
+
+#This entry enables voice commands on HA interface (This is not google assistant integration)
+conversation:
+
+discovery:
+
+hacs:
+  token: !secret github_token
+  theme: True
+
+frontend:
+  themes: !include themes.yaml
+
+google:
+  client_id: !secret gclient_id
+  client_secret: !secret gclient_sec
+
+weather:
+  - platform: darksky
+    api_key: !secret darksky_key
+    latitude:  !secret darksky_lat
+    longitude:  !secret darksky_long
+    units: us
+    mode: hourly
+
+media_player:
+  - platform: plex
+  - platform: webostv
+    host: lgwebostv.tokynet.local
+    name: Master Room
+    turn_on_action:
+      service: wake_on_lan.send_magic_packet
+      data:
+        mac: "00:51:ed:c1:e3:41"
+
+
+#owntracks
+owntracks:
+  max_gps_accuracy: 200
+
+# Sensors
+speedtestdotnet:
+  scan_interval:
+    minutes: 07
+
+sensor:
+  - platform: plex
+    host: cornpops.tokynet.local
+    port: 32400
+    name: LocalPlex
+    token: !secret plex_token
+
+  - platform: pi_hole
+    host: cheerios.tokynet.local
+    monitored_conditions:
+      - ads_blocked_today
+      - ads_percentage_today
+      - dns_queries_today
+      - queries_forwarded
+
+
+#Camera streams
+stream:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+#Unifi
+unifi:
+  controllers:
+    - host: unifi-controller
+      site: ToKyNET
+
+#zwave bits
+zwave: !include config/zwave.yaml
+
+#Notifications:
+#Pushbullet
+notify:
+  - name: pushbullet
+    platform: pushbullet
+    api_key: !secret pushbullet_api
+  - name: masterroom
+    platform: webostv
+    host: lgwebostv.tokynet.local
+    filename: webostv.conf
+
+#Troubleshooting
+logger:
+  default: debug
+
+
+####
+#external DB support
+####
+recorder:
+  db_url: !secret recorder_url
+  purge_keep_days: 120
+
+device_tracker: !include config/presence.yaml
+cover: !include config/cover.yaml
+sabnzbd: !include config/sabnzbd.yaml
+group: !include config/groups.yaml
+automation: !include config/automations.yaml
+script: !include config/scripts.yaml
+zone: !include config/zones.yaml

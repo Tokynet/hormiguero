@@ -1,0 +1,7 @@
+- platform: ping
+  consider_home: 600
+  hosts:
+    Dad_cell: tokydroid.tokynet.local
+    Mom_cell: leladroid.tokynet.local
+    Andres_cell: andresdroid.tokynet.local
+    Xbox: xboxone.tokynet.local
